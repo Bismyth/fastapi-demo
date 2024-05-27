@@ -1,0 +1,26 @@
+services:
+  webserver:
+    restart: always
+    networks:
+      - internal-api
+    build:
+      context: ./frontend
+    ports:
+      - "8010:80"
+    depends_on:
+      - backend
+  backend:
+    restart: always
+    networks:
+      - internal-api
+    build:
+      context: ./backend
+    volumes:
+      - db:/app/database
+
+volumes:
+  db:
+
+networks:
+  internal-api:
+    external: false
